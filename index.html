@@ -1,20 +1,26 @@
 <!doctype html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#173f33">
+<meta name="theme-color" content="#F6F9FE">
 <title>Kantong – Catatan Keuangan</title>
+<script>try{var t=localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <main id="auth" hidden>
+  <button class="icon theme corner" aria-label="Ganti tema"></button>
   <form id="authForm" class="card auth">
-    <h1>Kantong</h1>
-    <p class="muted">Catat pengeluaran dalam hitungan detik.</p>
-    <label>Email<input id="email" type="email" required autocomplete="email"></label>
-    <label>Kata sandi<input id="password" type="password" minlength="6" required autocomplete="current-password"></label>
+    <div class="logo"><i>K</i>Kantong</div>
+    <h1>Selamat datang</h1>
+    <p class="muted">Masuk atau buat akun untuk mulai mencatat keuangan Anda.</p>
+    <label>Email<input id="email" type="email" required autocomplete="email" placeholder="nama@email.com"></label>
+    <label>Kata sandi<input id="password" type="password" minlength="6" required autocomplete="current-password" placeholder="Minimal 6 karakter"></label>
     <p id="authMsg" role="status" class="muted"></p>
     <div class="row">
       <button class="primary" data-mode="in">Masuk</button>
@@ -25,8 +31,13 @@
 
 <div id="app" hidden>
   <header class="top">
-    <b>Kantong</b>
-    <button id="logout" class="ghost">Keluar</button>
+    <div class="top-in">
+      <div class="logo"><i>K</i>Kantong</div>
+      <div class="actions">
+        <button class="icon theme" aria-label="Ganti tema"></button>
+        <button id="logout" class="ghost">Keluar</button>
+      </div>
+    </div>
   </header>
 
   <div class="wrap">
@@ -35,12 +46,13 @@
         <div class="head"><p>Saldo total</p><input id="month" type="month" aria-label="Bulan"></div>
         <p id="balance" class="balance">Rp 0</p>
         <div class="stats">
-          <div><span>Pemasukan</span><b id="inc">Rp 0</b></div>
-          <div><span>Pengeluaran</span><b id="exp">Rp 0</b></div>
+          <div><span><i class="dot in"></i>Pemasukan</span><b id="inc">Rp 0</b></div>
+          <div><span><i class="dot out"></i>Pengeluaran</span><b id="exp">Rp 0</b></div>
         </div>
       </section>
 
       <form id="quick" class="card quick">
+        <h2>Catat transaksi</h2>
         <div class="seg" id="typeSeg">
           <button type="button" data-type="expense" class="on">Pengeluaran</button>
           <button type="button" data-type="income">Pemasukan</button>
@@ -53,7 +65,7 @@
           <input id="note" placeholder="Catatan (opsional)" maxlength="80">
           <input id="date" type="date" aria-label="Tanggal">
         </div>
-        <button class="primary big">Simpan</button>
+        <button class="primary big">Simpan transaksi</button>
         <p id="qMsg" role="status" class="muted"></p>
       </form>
     </section>
@@ -61,6 +73,7 @@
     <section class="col">
       <section class="card">
         <h2>Pengeluaran per kategori</h2>
+        <p class="muted">Pada bulan yang dipilih</p>
         <div id="report"></div>
       </section>
       <section class="card">

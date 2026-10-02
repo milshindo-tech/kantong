@@ -106,7 +106,7 @@ function render() {
   inMonth.filter(x => x.type === "expense").forEach(x => by[x.category] = (by[x.category] || 0) + Number(x.amount));
   const rows = Object.entries(by).sort((a, b) => b[1] - a[1]);
   $("#report").innerHTML = rows.length ? rows.map(([c, v]) =>
-    `<div class="bar"><div><span>${esc(c)}</span><span>${rp(v)} · ${Math.round(v / exp * 100)}%</span></div><i style="width:${v / rows[0][1] * 100}%"></i></div>`
+    `<div class="bar"><div><span>${ICON[c] || "📦"} ${esc(c)}</span><span>${rp(v)} · ${Math.round(v / exp * 100)}%</span></div><i style="width:${v / rows[0][1] * 100}%"></i></div>`
   ).join("") : `<p class="empty">Belum ada pengeluaran bulan ini.</p>`;
 
   $("#history").innerHTML = inMonth.length ? inMonth.map(x => {
@@ -117,3 +117,17 @@ function render() {
       <button class="del" data-id="${x.id}" aria-label="Hapus">Hapus</button></li>`;
   }).join("") : `<li class="empty">Belum ada transaksi bulan ini. Catat yang pertama di atas.</li>`;
 }
+
+/* ---------- Tema terang/gelap ---------- */
+const themeBtns = document.querySelectorAll(".theme");
+function applyTheme(t) {
+  document.documentElement.dataset.theme = t;
+  themeBtns.forEach(b => b.textContent = t === "dark" ? "☀" : "☾");
+  document.querySelector('meta[name="theme-color"]').content = t === "dark" ? "#0B1220" : "#F6F9FE";
+}
+applyTheme(document.documentElement.dataset.theme || "light");
+themeBtns.forEach(b => b.onclick = () => {
+  const t = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  applyTheme(t);
+  try { localStorage.setItem("theme", t); } catch (e) {}
+});
