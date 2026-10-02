@@ -4,6 +4,7 @@ const CATS = {
   expense: ["Makan", "Transport", "Belanja", "Tagihan", "Hiburan", "Kesehatan", "Lainnya"],
   income: ["Gaji", "Bonus", "Usaha", "Lainnya"]
 };
+const ICON = { Makan:"🍜", Transport:"🚌", Belanja:"🛍️", Tagihan:"🧾", Hiburan:"🎬", Kesehatan:"💊", Gaji:"💼", Bonus:"🎁", Usaha:"🏪", Lainnya:"📦" };
 const rp = n => "Rp " + Math.round(n).toLocaleString("id-ID");
 const todayStr = () => { const d = new Date(); return new Date(d - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10); };
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -45,7 +46,7 @@ function renderChips() {
   const list = CATS[type];
   if (!list.includes(cat)) cat = null;
   $("#chips").innerHTML = list.map(c =>
-    `<button type="button" role="radio" aria-checked="${c === cat}" data-c="${c}">${c}</button>`).join("");
+    `<button type="button" role="radio" aria-checked="${c === cat}" data-c="${c}">${ICON[c] || ""} ${c}</button>`).join("");
 }
 $("#chips").onclick = e => { const b = e.target.closest("button"); if (b) { cat = b.dataset.c; renderChips(); } };
 $("#typeSeg").onclick = e => {
@@ -111,7 +112,7 @@ function render() {
   $("#history").innerHTML = inMonth.length ? inMonth.map(x => {
     const d = new Date(x.occurred_on + "T00:00").toLocaleDateString("id-ID", { day: "numeric", month: "short" });
     const isIn = x.type === "income";
-    return `<li><div class="info"><b>${esc(x.category)}</b><small>${d}${x.note ? " · " + esc(x.note) : ""}</small></div>
+    return `<li><span class="ico">${ICON[x.category] || "📦"}</span><div class="info"><b>${esc(x.category)}</b><small>${d}${x.note ? " · " + esc(x.note) : ""}</small></div>
       <b class="${isIn ? "pos" : "neg"}">${isIn ? "+" : "−"}${rp(x.amount)}</b>
       <button class="del" data-id="${x.id}" aria-label="Hapus">Hapus</button></li>`;
   }).join("") : `<li class="empty">Belum ada transaksi bulan ini. Catat yang pertama di atas.</li>`;

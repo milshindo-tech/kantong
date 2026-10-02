@@ -31,6 +31,15 @@
 
   <div class="wrap">
     <section class="col">
+      <section class="hero">
+        <div class="head"><p>Saldo total</p><input id="month" type="month" aria-label="Bulan"></div>
+        <p id="balance" class="balance">Rp 0</p>
+        <div class="stats">
+          <div><span>Pemasukan</span><b id="inc">Rp 0</b></div>
+          <div><span>Pengeluaran</span><b id="exp">Rp 0</b></div>
+        </div>
+      </section>
+
       <form id="quick" class="card quick">
         <div class="seg" id="typeSeg">
           <button type="button" data-type="expense" class="on">Pengeluaran</button>
@@ -47,19 +56,6 @@
         <button class="primary big">Simpan</button>
         <p id="qMsg" role="status" class="muted"></p>
       </form>
-
-      <section class="card">
-        <div class="head">
-          <h2>Ringkasan</h2>
-          <input id="month" type="month" aria-label="Bulan">
-        </div>
-        <p class="muted">Saldo total</p>
-        <p id="balance" class="balance">Rp 0</p>
-        <div class="stats">
-          <div><span class="muted">Pemasukan</span><b id="inc" class="pos">Rp 0</b></div>
-          <div><span class="muted">Pengeluaran</span><b id="exp" class="neg">Rp 0</b></div>
-        </div>
-      </section>
     </section>
 
     <section class="col">
