@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#173f33">
+<title>Kantong – Catatan Keuangan</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main id="auth" hidden>
+  <form id="authForm" class="card auth">
+    <h1>Kantong</h1>
+    <p class="muted">Catat pengeluaran dalam hitungan detik.</p>
+    <label>Email<input id="email" type="email" required autocomplete="email"></label>
+    <label>Kata sandi<input id="password" type="password" minlength="6" required autocomplete="current-password"></label>
+    <p id="authMsg" role="status" class="muted"></p>
+    <div class="row">
+      <button class="primary" data-mode="in">Masuk</button>
+      <button class="ghost" data-mode="up">Daftar</button>
+    </div>
+  </form>
+</main>
+
+<div id="app" hidden>
+  <header class="top">
+    <b>Kantong</b>
+    <button id="logout" class="ghost">Keluar</button>
+  </header>
+
+  <div class="wrap">
+    <section class="col">
+      <form id="quick" class="card quick">
+        <div class="seg" id="typeSeg">
+          <button type="button" data-type="expense" class="on">Pengeluaran</button>
+          <button type="button" data-type="income">Pemasukan</button>
+        </div>
+        <label class="amt"><span>Rp</span>
+          <input id="amount" inputmode="numeric" placeholder="0" autocomplete="off" aria-label="Nominal">
+        </label>
+        <div id="chips" class="chips" role="radiogroup" aria-label="Kategori"></div>
+        <div class="row">
+          <input id="note" placeholder="Catatan (opsional)" maxlength="80">
+          <input id="date" type="date" aria-label="Tanggal">
+        </div>
+        <button class="primary big">Simpan</button>
+        <p id="qMsg" role="status" class="muted"></p>
+      </form>
+
+      <section class="card">
+        <div class="head">
+          <h2>Ringkasan</h2>
+          <input id="month" type="month" aria-label="Bulan">
+        </div>
+        <p class="muted">Saldo total</p>
+        <p id="balance" class="balance">Rp 0</p>
+        <div class="stats">
+          <div><span class="muted">Pemasukan</span><b id="inc" class="pos">Rp 0</b></div>
+          <div><span class="muted">Pengeluaran</span><b id="exp" class="neg">Rp 0</b></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="col">
+      <section class="card">
+        <h2>Pengeluaran per kategori</h2>
+        <div id="report"></div>
+      </section>
+      <section class="card">
+        <h2>Riwayat transaksi</h2>
+        <ul id="history" class="list"></ul>
+      </section>
+    </section>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
